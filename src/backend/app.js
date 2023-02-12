@@ -3,6 +3,8 @@ const app = express();
 const router = express.Router();
 const path = require("path");
 
+const knex = require("./database");
+
 const mealsRouter = require("./api/meals");
 const buildPath = path.join(__dirname, "../../dist");
 const port = process.env.PORT || 3000;
@@ -21,10 +23,14 @@ app.use(cors());
 
 router.use("/meals", mealsRouter);
 
+// app.get("/my-route", (req, res) => {
+//   res.send("Hi friend");
+// });
+
 if (process.env.API_PATH) {
   app.use(process.env.API_PATH, router);
 } else {
-  throw "API_PATH is not set. Remember to set it in your .env file"
+  throw "API_PATH is not set. Remember to set it in your .env file";
 }
 
 // for the frontend. Will first be covered in the react class
