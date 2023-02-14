@@ -2,72 +2,67 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../database");
 
-router.get("/", async (request, response) => {
+// GET - return all meals
+router.get("/", async (req, res) => {
   try {
-    // knex syntax for selecting things. Look up the documentation for knex for further info
-    const titles = await knex("meals").select("title");
-    response.json(titles);
-  } catch (error) {
-    throw error;
+    const meals = await knex("meal").select("*");
+    res.json(meals);
+  } catch (err) {
+    res.status(500).send(`Error: 💥 ${err.message}`);
   }
 });
 
-// /future-meals	Respond with all meals in the future (relative to the when datetime)
-router.get("/future-meals", async (req, res) => {
+// POST - adds a new meal to the database
+router.post("/", async (req, res) => {
   try {
-    const rows = await knex.raw("SELECT * FROM `meal` WHERE `when` >= NOW()");
-    rows[0].length === 0 ? res.status(200).send(rows[0]) : res.send(rows[0]);
+    const newMeal = req.body;
+    const insertMeal = await knex("meal").insert(newMeal);
+    res.status(201).json(insertMeal);
   } catch (err) {
-    res.statusCode = 500;
-    res.send(`💥Error: ${err.message}`);
+    res.status(503).send(`Error: 💥 ${err.message}`);
   }
 });
 
-// /past-meals	Respond with all meals in the past (relative to the when datetime)
-router.get("/past-meals", async (req, res) => {
+// GET - returns the meal by id
+router.get("/:id", async (req, res) => {
   try {
-    const rows = await knex.raw("SELECT * FROM `meal` WHERE `when` < NOW()");
-    rows[0].length === 0 ? res.status(200).send(rows[0]) : res.send(rows[0]);
+    const mealId = parseInt(req.params.id);
+    const meal = await knex("meal").select("*").where({ id: mealId });
+    if (meal.length === 0) {
+      res.status(404).send(`Id ${mealId} not found.`);
+    } else res.status(200).json({ expectedmeal: meal });
   } catch (err) {
-    res.statusCode = 500;
-    res.send(`💥Error: ${err.message}`);
+    res.status(503).send(`Error: 💥 ${err.message}`);
   }
 });
 
-// /all-meals	Respond with all meals sorted by ID
-router.get("/all-meals", async (req, res) => {
+// PUT - updates the meal by id
+router.put("/:id", async (req, res) => {
   try {
-    const rows = await knex.raw("SELECT * FROM `meal` ORDER BY `id`");
-    rows[0].length === 0 ? res.status(200).send(rows[0]) : res.send(rows[0]);
+    const mealId = parseInt(req.params.id);
+    const updatedMeal = await knex("meal")
+      .where({ id: mealId })
+      .update(req.body);
+    if (updatedMeal) {
+      res.status(200).json({ MealUpdated: mealId });
+    } else res.status(404).send("Id not found.");
   } catch (err) {
-    res.statusCode = 500;
-    res.send(`💥Error: ${err.message}`);
+    res.status(503).send(`Error: 💥 ${err.message}`);
   }
 });
 
-// /first-meal	Respond with the first meal (meaning with the minimum id)
-router.get("/first-meal", async (req, res) => {
+// DELETE - deletes the meals by id
+router.delete("/:id", async (req, res) => {
   try {
-    const rows = await knex.raw("SELECT * FROM `meal` ORDER BY `id` LIMIT 1");
-    rows[0].length === 0
-      ? res.status(404).send(`No meals registered in database.`)
-      : res.send(rows[0]);
+    const mealId = parseInt(req.params.id);
+    const deletedMeal = await knex("meal").where({ id: mealId }).del();
+    if (deletedMeal) {
+      res.status(200)._construct.json({ DeletedMeal: deletedMeal });
+    } else {
+      res.status(404).json({ message: "Meal id not valid." });
+    }
   } catch (err) {
-    res.statusCode = 500;
-    res.send(`💥Error: ${err.message}`);
-  }
-});
-
-// /last-meal	Respond with the last meal (meaning with the maximum id)
-router.get("/last-meal", async (req, res) => {
-  try {
-    const rows = await knex.raw("SELECT * FROM `meal` ORDER BY `id` desc");
-    rows[0].length === 0
-      ? res.status(404).send(`No meals registered in database.`)
-      : res.send(rows[0]);
-  } catch (err) {
-    res.statusCode = 500;
-    res.send(`💥Error: ${err.message}`);
+    res.status(503).send(`Error: 💥 ${err.message}`);
   }
 });
 
