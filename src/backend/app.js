@@ -6,6 +6,8 @@ const path = require("path");
 const knex = require("./database");
 
 const mealsRouter = require("./api/meals");
+const reservRouter = require("./api/reservations"); ////////////////////////////////
+
 const buildPath = path.join(__dirname, "../../dist");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
@@ -22,10 +24,70 @@ app.use(express.json());
 app.use(cors());
 
 router.use("/meals", mealsRouter);
+router.use("/reservations", reservRouter); ////////////////////////////////////////
 
 // app.get("/my-route", (req, res) => {
 //   res.send("Hi friend");
 // });
+
+// /future-meals	Respond with all meals in the future (relative to the when datetime)
+app.get("/future-meals", async (req, res) => {
+  try {
+    const rows = await knex.raw("SELECT * FROM `meal` WHERE `when` >= NOW()");
+    rows[0].length === 0 ? res.status(200).send(rows[0]) : res.send(rows[0]);
+  } catch (err) {
+    res.statusCode = 500;
+    res.send(`💥Error: ${err.message}`);
+  }
+});
+
+// /past-meals	Respond with all meals in the past (relative to the when datetime)
+app.get("/past-meals", async (req, res) => {
+  try {
+    const rows = await knex.raw("SELECT * FROM `meal` WHERE `when` < NOW()");
+    rows[0].length === 0 ? res.status(200).send(rows[0]) : res.send(rows[0]);
+  } catch (err) {
+    res.statusCode = 500;
+    res.send(`💥Error: ${err.message}`);
+  }
+});
+
+// /all-meals	Respond with all meals sorted by ID
+app.get("/all-meals", async (req, res) => {
+  try {
+    const rows = await knex.raw("SELECT * FROM `meal` ORDER BY `id`");
+    rows[0].length === 0 ? res.status(200).send(rows[0]) : res.send(rows[0]);
+  } catch (err) {
+    res.statusCode = 500;
+    res.send(`💥Error: ${err.message}`);
+  }
+});
+
+// /first-meal	Respond with the first meal (meaning with the minimum id)
+app.get("/first-meal", async (req, res) => {
+  try {
+    const rows = await knex.raw("SELECT * FROM `meal` ORDER BY `id` LIMIT 1");
+    rows[0].length === 0
+      ? res.status(404).send(`No meals registered in database.`)
+      : res.send(rows[0]);
+  } catch (err) {
+    res.statusCode = 500;
+    res.send(`💥Error: ${err.message}`);
+  }
+});
+
+// /last-meal	Respond with the last meal (meaning with the maximum id)
+app.get("/last-meal", async (req, res) => {
+  try {
+    const rows = await knex.raw("SELECT * FROM `meal` ORDER BY `id` desc");
+    rows[0].length === 0
+      ? res.status(404).send(`No meals registered in database.`)
+      : res.send(rows[0]);
+  } catch (err) {
+    res.statusCode = 500;
+    res.send(`💥Error: ${err.message}`);
+  }
+});
 
 if (process.env.API_PATH) {
   app.use(process.env.API_PATH, router);
