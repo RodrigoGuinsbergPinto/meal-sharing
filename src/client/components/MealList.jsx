@@ -32,7 +32,7 @@ const MealList = () => {
           })}
         </ul>
       ) : (
-        <p>Loading... </p>
+        <div>{isLoading && <p>Loading...</p>} </div>
       )}
     </div>
   );
