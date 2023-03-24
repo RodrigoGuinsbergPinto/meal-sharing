@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const MealList = () => {
-  const [meal, setMeal] = useState();
+  const [meals, setMeals] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -10,23 +10,23 @@ const MealList = () => {
       const resp = await fetch("/api/meals");
       const result = await resp.json();
       console.log(result);
-      setMeal(result);
+      setMeals(result);
       setIsLoading(false);
     })();
   }, []);
 
   return (
     <div>
-      {meal ? (
+      {meals ? (
         <ul>
-          {meal.map((aMeal) => {
+          {meals.map((meal) => {
             return (
-              <li key={aMeal.id}>
+              <li key={meal.id}>
                 <p style={{ fontWeight: "bold", fontSize: "20px" }}>
-                  {aMeal.title}
+                  {meal.title}
                 </p>
-                <p>Description: {aMeal.description}</p>
-                <p>Price: {aMeal.price}</p>
+                <p>Description: {meal.description}</p>
+                <p>Price: {meal.price}</p>
               </li>
             );
           })}
