@@ -1,33 +1,54 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-@import 'theme.css';
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@import "theme.css";
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
 }
 
-#root {
+ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 30%;
+  border: 5px solid red;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.meal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(26, 204, 26);
+}
+
+/* #root {
   padding-left: 30%;
   padding-right: 30%;
   height: 100vh;
-}
+} */
 
-body {
+/* body {
   margin: 0;
   font-size: 17px;
-}
+} */
 
-ul {
+/* ul {
   list-style: none;
   padding: 0;
   margin: 0;
-}
+} */
 
-a {
+/* a {
   text-decoration: none;
   color: #2d3233;
-}
+} */
 
-button {
+/* button {
   background-color: #3e99c0;
   border-radius: 8px;
   border-width: 0px;
@@ -35,18 +56,18 @@ button {
   color: rgb(255, 255, 255);
   padding: 5px;
   font-size: 17px;
-}
+} */
 
-@media screen and (max-width: 1400px) {
-  #root {
+/* @media screen and (max-width: 1400px) { */
+/* #root {
     padding-left: 30%;
     padding-right: 30%;
-  }
-}
+  } */
+/* } */
 
-@media screen and (max-width: 750px) {
-  #root {
+/* @media screen and (max-width: 750px) { */
+/* #root {
     padding-left: 0;
     padding-right: 0;
-  }
-}
+  } */
+/* } */
