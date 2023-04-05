@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const knex = require("../database");
+const dbcon = require("../database");
 
 // GET - return all reservations
 router.get("/", async (req, res) => {
@@ -29,7 +30,7 @@ router.get("/:id", async (req, res) => {
     const reservationId = parseInt(req.params.id);
     const reservation = await knex("reservation")
       .select("*")
-      .where({ id: reservationId });
+      .where({ meal_id: reservationId });
     if (reservation.length === 0) {
       res.status(404).send(`Id ${reservationId} not found.`);
     } else res.status(200).json({ expectedreservation: reservation });
@@ -43,7 +44,7 @@ router.put("/:id", async (req, res) => {
   try {
     const reservationId = parseInt(req.params.id);
     const updatedReservation = await knex("reservation")
-      .where({ id: reservationId })
+      .where({ meal_id: reservationId })
       .update(req.body);
     if (updatedReservation) {
       res.status(200).json({ ReservationUpdated: reservationId });
@@ -58,7 +59,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const reservationId = parseInt(req.params.id);
     const deletedReservation = await knex("reservation")
-      .where({ id: reservationId })
+      .where({ meal_id: reservationId })
       .del();
     if (deletedReservation) {
       res
