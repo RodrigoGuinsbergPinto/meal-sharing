@@ -53,9 +53,9 @@ function ReservationForm({ mealId }) {
       });
   };
 
-  const updateAvailableRes = async () => {
-    const reservations = await fetch(`/api/reservations/${mealId}`).then((r) =>
-      r.json()
+  const updateAvailableReservations = async () => {
+    const reservations = await fetch(`/api/reservations/${mealId}`).then(
+      (response) => response.json()
     );
     const totalReservations = reservations.expectedreservation.reduce(
       (n, reservation) => {
@@ -64,22 +64,17 @@ function ReservationForm({ mealId }) {
       0
     );
     const [{ max_reservations: maxReservations }] = (
-      await fetch(`/api/meals/${mealId}`).then((r) => r.json())
+      await fetch(`/api/meals/${mealId}`).then((response) => response.json())
     ).expectedmeal;
     setAvailableResevations(maxReservations - totalReservations);
   };
   useEffect(() => {
-    updateAvailableRes();
+    updateAvailableReservations();
   }, []);
 
   return (
     <div>
       <div>
-        <p>
-          `There are {availableReservations} available reservations for this
-          meal.`
-        </p>
-
         {availableReservations > 0 ? (
           <form className="reservation-form-container">
             <h3 className="reservation-title">Make your reservation.</h3>

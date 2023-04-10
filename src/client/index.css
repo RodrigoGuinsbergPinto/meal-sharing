@@ -127,3 +127,12 @@ ul {
   margin: 1rem;
   padding: 0.5rem;
 }
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar > input {
+  margin-left: 1rem;
+}

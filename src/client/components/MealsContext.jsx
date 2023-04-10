@@ -12,7 +12,7 @@ function MealsProvider({ children }) {
       setIsLoading(true);
       const resp = await fetch("/api/meals");
       const result = await resp.json();
-      console.log(result);
+      // console.log(result);
       setMeals(result);
       setRequestState("success");
 

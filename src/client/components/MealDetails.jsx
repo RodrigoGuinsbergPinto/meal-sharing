@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { MealsContext } from "./MealsContext";
 import ReservationForm from "./ReservationForm";
 import ReviewForm from "./ReviewForm";
+import AvailableReservations from "./AvailableReservations";
 
 function MealDetails() {
   const { id } = useParams();
@@ -31,6 +32,7 @@ function MealDetails() {
             <p className="meal-title">{meal.title}</p>
             <p>Description: {meal.description}</p>
             <p>Price: {meal.price}</p>
+            <AvailableReservations mealId={id} />
           </div>
           <ReservationForm mealId={id} />
           <ReviewForm mealId={id} />

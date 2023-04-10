@@ -4,7 +4,6 @@ import { MealsContext } from "./MealsContext";
 function Reviews() {
   const { isLoading } = useContext(MealsContext);
   const [reviews, setReviews] = useState();
-  // const [requestState, setRequestState] = useState("loading");
   const [notFound, setNotFound] = useState();
 
   useEffect(() => {
