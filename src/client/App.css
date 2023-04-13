@@ -1,7 +1,7 @@
 /* * {
   box-sizing: border-box;
 } */
-
+/* 
 ul {
   display: flex;
   flex-direction: row;
@@ -10,11 +10,11 @@ ul {
 .card {
   border: 5px solid red;
   border-radius: 0.5rem;
-  /* margin: 1rem;
-  padding: 1rem; */
+  margin: 1rem;
+  padding: 1rem;
 }
 
 .meal-title {
   font-size: 1.5rem;
   font-weight: bold;
-}
+} */

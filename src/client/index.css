@@ -5,6 +5,67 @@
   box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+}
+
+nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #b63737;
+}
+
+nav > h1 {
+  font-family: "Montserrat";
+  color: white;
+  text-align: center;
+  padding: 0;
+  font-size: 3rem;
+  margin: 10px 0px 5px 0px;
+}
+
+nav > h3 {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 0;
+  margin: 5px 20px 10px 20px;
+}
+
+.navbar-link {
+  text-decoration: none !important;
+  color: white;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  margin-top: auto;
+  background-color: #b63737;
+  padding: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+footer > div {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-small {
+  margin-top: auto;
+}
+
 ul {
   display: flex;
   flex-direction: row;
@@ -26,48 +87,43 @@ ul {
   color: rgb(26, 204, 26);
 }
 
-/* #root {
-  padding-left: 30%;
-  padding-right: 30%;
-  height: 100vh;
-} */
+.reservation-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 
-/* body {
-  margin: 0;
-  font-size: 17px;
-} */
+.description-button {
+  border: none;
+  border-radius: 0.5rem;
+  background-color: transparent;
+}
 
-/* ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-} */
+.description-button:hover {
+  color: red;
+  font-weight: bold;
+  background-color: transparent;
+}
 
-/* a {
-  text-decoration: none;
-  color: #2d3233;
-} */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-/* button {
-  background-color: #3e99c0;
-  border-radius: 8px;
-  border-width: 0px;
-  font-weight: 295;
-  color: rgb(255, 255, 255);
-  padding: 5px;
-  font-size: 17px;
-} */
+.mealdetails-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
-/* @media screen and (max-width: 1400px) { */
-/* #root {
-    padding-left: 30%;
-    padding-right: 30%;
-  } */
-/* } */
+.reservation-form-container {
+  border: 3px solid rgb(26, 204, 26);
+  border-radius: 0.5rem;
+  margin: 1rem;
+  padding: 1rem;
+}
 
-/* @media screen and (max-width: 750px) { */
-/* #root {
-    padding-left: 0;
-    padding-right: 0;
-  } */
-/* } */
+.reservation-form-input {
+  margin: 1rem;
+  padding: 0.5rem;
+}

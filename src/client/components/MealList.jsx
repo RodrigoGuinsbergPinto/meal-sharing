@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Meal from "./Meal";
+import { MealsContext } from "./MealsContext";
 
-const MealList = () => {
-  const [meals, setMeals] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      const resp = await fetch("/api/meals");
-      const result = await resp.json();
-      console.log(result);
-      setMeals(result);
-      setIsLoading(false);
-    })();
-  }, []);
+function MealList() {
+  const { meals, isLoading } = useContext(MealsContext);
 
   return (
     <div>
+      <div className="header">
+        <h1>Our Menu</h1>
+        <h3>Choose your favorite from our Italian classics.</h3>
+      </div>
+
       {meals ? (
         <ul>
           {meals.map((meal) => (
@@ -29,50 +23,6 @@ const MealList = () => {
       )}
     </div>
   );
-};
+}
 
 export default MealList;
-
-//////////////////////////////////////////
-
-// import React, { useEffect, useState } from "react";
-
-// const MealList = () => {
-//   const [meals, setMeals] = useState();
-//   const [isLoading, setIsLoading] = useState(false);
-
-//   useEffect(() => {
-//     (async () => {
-//       setIsLoading(true);
-//       const resp = await fetch("/api/meals");
-//       const result = await resp.json();
-//       console.log(result);
-//       setMeals(result);
-//       setIsLoading(false);
-//     })();
-//   }, []);
-
-//   return (
-//     <div>
-//       {meals ? (
-//         <ul>
-//           {meals.map((meal) => {
-//             return (
-//               <li key={meal.id}>
-//                 <p style={{ fontWeight: "bold", fontSize: "20px" }}>
-//                   {meal.title}
-//                 </p>
-//                 <p>Description: {meal.description}</p>
-//                 <p>Price: {meal.price}</p>
-//               </li>
-//             );
-//           })}
-//         </ul>
-//       ) : (
-//         <div>{isLoading && <p>Loading...</p>} </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default MealList;
